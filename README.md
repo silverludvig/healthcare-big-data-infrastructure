@@ -57,12 +57,20 @@ The project encompasses the following key components:
 
 - **MongoDB**: NoSQL database for managing unstructured patient data.
 - **AWS S3**: Scalable object storage for data.
+### Data Processing
+
+Data is processed and stored using:
+Hadoop Ecosystem: HDFS, Yarn, Hive, Spark.
+MongoDB: For unstructured patient data.
+AWS S3: For large-scale data storage.
 
 ### Workflow Orchestration
 
 - **Apache Airflow**: Orchestrates complex computational workflows.
+### Compliance
+Ensures compliance with healthcare data regulations such as HIPAA.
 
-## Setup
+
 
 ### Prerequisites
 
@@ -72,9 +80,5 @@ The project encompasses the following key components:
 - Terraform
 - AWS CLI
 
-### Installation
-
-1. **Clone the Repository**
-   ```bash
-   git clone https://github.com/your-username/healthcare-big-data-infrastructure.git
-   cd healthcare-big-data-infrastructure
+### Contributing
+Contributions are welcome! Please submit a pull request or open an issue for any improvements or bugs.
