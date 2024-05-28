@@ -28,7 +28,7 @@ The project encompasses the following key components:
 
 ## Architecture
 
-![Architecture Diagram](path/to/architecture-diagram.png)
+![Architecture Diagram]
 
 ## Components
 
