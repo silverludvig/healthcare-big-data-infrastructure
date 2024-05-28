@@ -1,0 +1,38 @@
+- name: Setup Hadoop Ecosystem on Kubernetes
+  hosts: all
+  become: yes
+  tasks:
+    - name: Install required packages
+      apt:
+        name:
+          - docker.io
+          - python3-pip
+        state: present
+
+    - name: Install Kubernetes CLI
+      shell: curl -LO "https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl"
+      args:
+        creates: /usr/local/bin/kubectl
+
+    - name: Install Helm
+      shell: curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+      args:
+        creates: /usr/local/bin/helm
+
+    - name: Install Ansible Kubernetes module
+      pip:
+        name: openshift
+
+    - name: Deploy Hadoop using Helm
+      shell: helm repo add stable https://charts.helm.sh/stable && helm repo update && helm install hadoop-cluster stable/hadoop
+
+    - name: Setup Kerberos
+      shell: |
+        sudo apt-get install -y krb5-admin-server krb5-kdc
+        sudo krb5_newrealm
+      when: kerberos_enabled | default(true)
+      
+    - name: Install Apache Ranger
+      shell: |
+        sudo apt-get install -y ranger
+      when: ranger_enabled | default(true)
