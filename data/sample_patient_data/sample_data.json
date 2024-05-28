@@ -1,0 +1,52 @@
+[
+  {
+    "patient_id": "P001",
+    "name": "John Doe",
+    "age": 45,
+    "gender": "Male",
+    "diagnosis": "Hypertension",
+    "admission_date": "2023-01-15",
+    "discharge_date": "2023-01-20",
+    "notes": "Patient showed improvement with medication. Blood pressure stabilized."
+  },
+  {
+    "patient_id": "P002",
+    "name": "Jane Smith",
+    "age": 52,
+    "gender": "Female",
+    "diagnosis": "Type 2 Diabetes",
+    "admission_date": "2023-02-10",
+    "discharge_date": "2023-02-15",
+    "notes": "Patient requires ongoing insulin therapy. Dietary recommendations provided."
+  },
+  {
+    "patient_id": "P003",
+    "name": "Michael Johnson",
+    "age": 36,
+    "gender": "Male",
+    "diagnosis": "Asthma",
+    "admission_date": "2023-03-05",
+    "discharge_date": "2023-03-08",
+    "notes": "Acute asthma attack managed with bronchodilators and corticosteroids."
+  },
+  {
+    "patient_id": "P004",
+    "name": "Emily Davis",
+    "age": 29,
+    "gender": "Female",
+    "diagnosis": "Anxiety Disorder",
+    "admission_date": "2023-04-12",
+    "discharge_date": "2023-04-18",
+    "notes": "Patient referred to mental health specialist. Anxiety managed with therapy and medication."
+  },
+  {
+    "patient_id": "P005",
+    "name": "David Wilson",
+    "age": 60,
+    "gender": "Male",
+    "diagnosis": "Chronic Obstructive Pulmonary Disease (COPD)",
+    "admission_date": "2023-05-20",
+    "discharge_date": "2023-05-25",
+    "notes": "COPD exacerbation managed with steroids and antibiotics. Smoking cessation advice given."
+  }
+]
