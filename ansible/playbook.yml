@@ -1,5 +1,5 @@
 - name: Setup Hadoop Ecosystem on Kubernetes
-  hosts: all
+  hosts: localhost
   become: yes
   tasks:
     - name: Install required packages
@@ -10,7 +10,7 @@
         state: present
 
     - name: Install Kubernetes CLI
-      shell: curl -LO "https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl"
+      shell: curl -LO "https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl" && chmod +x ./kubectl && mv ./kubectl /usr/local/bin/kubectl
       args:
         creates: /usr/local/bin/kubectl
 
@@ -23,16 +23,30 @@
       pip:
         name: openshift
 
+    - name: Configure kubeconfig
+      shell: aws eks update-kubeconfig --region us-west-2 --name hadoop-eks-cluster
+      environment:
+        AWS_ACCESS_KEY_ID: "{{ lookup('env', 'AWS_ACCESS_KEY_ID') }}"
+        AWS_SECRET_ACCESS_KEY: "{{ lookup('env', 'AWS_SECRET_ACCESS_KEY') }}"
+
     - name: Deploy Hadoop using Helm
       shell: helm repo add stable https://charts.helm.sh/stable && helm repo update && helm install hadoop-cluster stable/hadoop
 
     - name: Setup Kerberos
-      shell: |
-        sudo apt-get install -y krb5-admin-server krb5-kdc
-        sudo krb5_newrealm
+      apt:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - krb5-admin-server
+        - krb5-kdc
       when: kerberos_enabled | default(true)
-      
+
+    - name: Create new Kerberos realm
+      shell: sudo krb5_newrealm
+      when: kerberos_enabled | default(true)
+
     - name: Install Apache Ranger
-      shell: |
-        sudo apt-get install -y ranger
+      apt:
+        name: ranger
+        state: present
       when: ranger_enabled | default(true)
