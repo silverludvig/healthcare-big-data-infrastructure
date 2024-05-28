@@ -32,21 +32,44 @@
     - name: Deploy Hadoop using Helm
       shell: helm repo add stable https://charts.helm.sh/stable && helm repo update && helm install hadoop-cluster stable/hadoop
 
-    - name: Setup Kerberos
+    - name: Install Kerberos packages
       apt:
         name: "{{ item }}"
         state: present
       loop:
         - krb5-admin-server
         - krb5-kdc
-      when: kerberos_enabled | default(true)
 
-    - name: Create new Kerberos realm
-      shell: sudo krb5_newrealm
-      when: kerberos_enabled | default(true)
+    - name: Configure Kerberos
+      copy:
+        content: |
+          [libdefaults]
+            default_realm = EXAMPLE.COM
+          [realms]
+            EXAMPLE.COM = {
+              kdc = localhost
+              admin_server = localhost
+            }
+          [domain_realm]
+            .example.com = EXAMPLE.COM
+            example.com = EXAMPLE.COM
+        dest: /etc/krb5.conf
+
+    - name: Create Kerberos realm
+      shell: echo -e "admin\nadmin" | sudo krb5_newrealm
 
     - name: Install Apache Ranger
       apt:
         name: ranger
         state: present
-      when: ranger_enabled | default(true)
+
+    - name: Configure Ranger
+      shell: |
+        sudo /usr/local/ranger-admin/setup.sh
+        sudo /usr/local/ranger-usersync/setup.sh
+
+    - name: Deploy MongoDB
+      shell: kubectl apply -f https://raw.githubusercontent.com/mongodb/mongo/master/k8s/mongodb.yaml
+
+    - name: Deploy Apache Airflow
+      shell: helm repo add apache-airflow https://airflow.apache.org && helm repo update && helm install airflow apache-airflow/airflow
