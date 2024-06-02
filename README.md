@@ -22,7 +22,6 @@ The project encompasses the following key components:
 - **Hadoop Ecosystem**: HDFS, Yarn, Hive, Spark
 - **Container Orchestration**: Kubernetes
 - **Automation**: Ansible, Terraform
-- **Security**: Kerberos, Apache Ranger
 - **Data Management**: MongoDB, AWS S3
 - **Workflow Orchestration**: Apache Airflow
 
@@ -50,8 +49,19 @@ The project encompasses the following key components:
 
 ### Security
 
-- **Kerberos**: Network authentication protocol.
-- **Apache Ranger**: Provides security and access control.
+Implementing basic security measures to ensure the protection of sensitive healthcare data:
+
+1. **Data Encryption**:
+    - Use encryption at rest for data stored in HDFS, MongoDB, and AWS S3.
+    - Use encryption in transit (TLS) for data transferred between services.
+
+2. **Access Control**:
+    - Implement role-based access control (RBAC) in Kubernetes to limit access to cluster resources.
+    - Use IAM roles and policies to control access to AWS resources.
+
+3. **Monitoring and Auditing**:
+    - Enable logging and monitoring using tools like AWS CloudWatch.
+    - Regularly review audit logs for any unauthorized access or suspicious activities.
 
 ### Data Management
 
