@@ -5,7 +5,6 @@ This project sets up and manages a comprehensive Hadoop ecosystem on Kubernetes,
 ## Table of Contents
 
 - [Overview](#overview)
-- [Architecture](#architecture)
 - [Components](#components)
 - [Setup](#setup)
 - [Security](#security)
@@ -25,7 +24,6 @@ The project encompasses the following key components:
 - **Data Management**: MongoDB, AWS S3
 - **Workflow Orchestration**: Apache Airflow
 
-## Architecture
 
 ## Components
 
