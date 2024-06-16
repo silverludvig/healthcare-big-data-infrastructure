@@ -27,8 +27,6 @@ The project encompasses the following key components:
 
 ## Architecture
 
-![Architecture Diagram]
-
 ## Components
 
 ### Hadoop Ecosystem
