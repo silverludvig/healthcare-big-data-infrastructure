@@ -2,6 +2,8 @@ from airflow import DAG
 from airflow.operators.bash_operator import BashOperator
 from datetime import datetime, timedelta
 
+
+# change as needed to satisfy your need like change the start date or email_on_failure
 default_args = {
     'owner': 'airflow',
     'depends_on_past': False,
