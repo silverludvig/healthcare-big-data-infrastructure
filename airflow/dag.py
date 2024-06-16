@@ -29,7 +29,7 @@ t1 = BashOperator(
 
 t2 = BashOperator(
     task_id='upload_to_s3',
-    bash_command='aws s3 cp /path/to/data s3://healthcare-patient-data/',
+    bash_command='aws s3 cp D:\JOB s3://healthcare-patient-data/',
     dag=dag,
 )
 
