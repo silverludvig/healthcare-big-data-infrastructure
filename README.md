@@ -1,90 +1,27 @@
-# Healthcare Big Data Infrastructure with Automated Reporting
-
-This project sets up and manages a comprehensive Hadoop ecosystem on Kubernetes, automating deployment and configuration using Ansible and Terraform. It includes security measures, data management, and workflow orchestration tailored for healthcare data.
-
-## Table of Contents
-
-- [Overview](#overview)
-- [Components](#components)
-- [Setup](#setup)
-- [Security](#security)
-- [Data Processing](#data-processing)
-- [Workflow Orchestration](#workflow-orchestration)
-- [Compliance](#compliance)
-- [Contributing](#contributing)
-- [License](#license)
-
-## Overview
-
-The project encompasses the following key components:
-
-- **Hadoop Ecosystem**: HDFS, Yarn, Hive, Spark
-- **Container Orchestration**: Kubernetes
-- **Automation**: Ansible, Terraform
-- **Data Management**: MongoDB, AWS S3
-- **Workflow Orchestration**: Apache Airflow
+# AWS-Driven Big Data Infrastructure for Healthcare
 
 
-## Components
-
-### Hadoop Ecosystem
-
-- **HDFS**: Distributed file system for storing large data sets.
-- **Yarn**: Resource management for Hadoop.
-- **Hive**: Data warehouse software for querying and managing large datasets.
-- **Spark**: Fast and general-purpose cluster-computing system.
-
-### Container Orchestration
-
-- **Kubernetes**: Automates deployment, scaling, and operations of application containers.
-
-### Automation
-
-- **Ansible**: Automates software provisioning, configuration management, and application deployment.
-- **Terraform**: Provides infrastructure as code.
-
-### Security
-
-Implementing basic security measures to ensure the protection of sensitive healthcare data:
-
-1. **Data Encryption**:
-    - Use encryption at rest for data stored in HDFS, MongoDB, and AWS S3.
-    - Use encryption in transit (TLS) for data transferred between services.
-
-2. **Access Control**:
-    - Implement role-based access control (RBAC) in Kubernetes to limit access to cluster resources.
-    - Use IAM roles and policies to control access to AWS resources.
-
-3. **Monitoring and Auditing**:
-    - Enable logging and monitoring using tools like AWS CloudWatch.
-    - Regularly review audit logs for any unauthorized access or suspicious activities.
-
-### Data Management
-
-- **MongoDB**: NoSQL database for managing unstructured patient data.
-- **AWS S3**: Scalable object storage for data.
-### Data Processing
-
-Data is processed and stored using:
-Hadoop Ecosystem: HDFS, Yarn, Hive, Spark.
-MongoDB: For unstructured patient data.
-AWS S3: For large-scale data storage.
-
-### Workflow Orchestration
-
-- **Apache Airflow**: Orchestrates complex computational workflows.
-### Compliance
-Ensures compliance with healthcare data regulations such as HIPAA.
+This project focuses on building and managing a scalable infrastructure for processing structured healthcare data using AWS services. Amazon RDS is the central relational database, responsible for securely storing and managing healthcare data with high availability and compliance with regulations. For complex data processing and analytics, AWS EMR with Apache Spark is used to efficiently handle large datasets. Terraform is leveraged to automate the provisioning and configuration of AWS infrastructure, ensuring that everything is consistent and easily repeatable. Python scripts are employed to automate the data workflows, such as extracting data from RDS, processing it in Spark on EMR, and then loading the processed data back into RDS.
 
 
+## Technologies Used
 
-### Prerequisites
+- **Amazon RDS**: Central relational database for storing structured healthcare data.
+- **Amazon EMR (Elastic MapReduce)**: Used with Apache Spark for large-scale data processing and analytics.
+- **Apache Spark**: A powerful open-source processing engine for big data analytics.
+- **Terraform**: Infrastructure as code tool used for automating the provisioning and configuration of AWS resources.
+- **Python**: Used for scripting and automating data workflows between RDS and EMR.
 
-- Docker
-- Kubernetes
-- Ansible
-- Terraform
-- AWS CLI
+## Project Structure
 
-### Contributing
-Contributions are welcome! Please submit a pull request or open an issue for any improvements or bugs.
+- **/terraform**: Contains the Terraform scripts used to provision the AWS infrastructure, including RDS, EMR clusters, and necessary IAM roles and security groups.
+- **/scripts**: Python scripts that automate data workflows, such as data extraction, processing, and loading tasks.
+- **/docs**: Documentation and notes on the project, including setup instructions and configuration details.
+
+## Security and Compliance
+
+The infrastructure is designed with security and compliance in mind, particularly for handling sensitive healthcare data. Amazon RDS is configured with encryption at rest and in transit, and IAM roles are used to ensure proper access control. Logging and monitoring are enabled to track access and usage across the infrastructure.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
