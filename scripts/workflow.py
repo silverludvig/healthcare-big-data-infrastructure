@@ -8,11 +8,11 @@ from botocore.exceptions import ClientError
 rds_client = boto3.client('rds', region_name='eu-north-1')
 emr_client = boto3.client('emr', region_name='eu-north-1')
 
-# Define your parameters
+# Define parameters
 RDS_DB_IDENTIFIER = 'healthcare_db'
-EMR_CLUSTER_ID = 'j-XXXXXXXXXXXXX'  # Replace with your actual EMR cluster ID
-DB_USERNAME = 'admin'
-DB_PASSWORD = 'password'
+EMR_CLUSTER_ID = 'j-3H4K5L6P7J8M9N0P1' 
+DB_USERNAME = 'admin_user'
+DB_PASSWORD = 'Str0ngP@ssw0rd!'
 DB_NAME = 'healthcare'
 
 # Configure logging
@@ -122,12 +122,13 @@ def load_data_into_rds(input_path):
 def main():
     try:
         logging.info("Starting data workflow...")
-        query = "SELECT * FROM healthcare_table;"  # Replace with your actual SQL query
+        query = "SELECT id, name, diagnosis, treatment_date FROM patients WHERE treatment_date > '2023-01-01';"
+
         output_path = "/tmp/extracted_data.csv"
         
         extract_data_from_rds(query, output_path)
         
-        spark_script_path = "hdfs:///user/hadoop/spark_script.py"  # Adjust path as needed
+        spark_script_path = "/home/hadoop/my_spark_job.py" 
         processed_output_path = "/tmp/processed_data.csv"
         
         submit_spark_job(spark_script_path, output_path, processed_output_path)
