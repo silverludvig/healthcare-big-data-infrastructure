@@ -1,4 +1,5 @@
 import boto3
+import pymysql  # or use psycopg2 for PostgreSQL
 import time
 import logging
 from botocore.exceptions import ClientError
@@ -8,8 +9,11 @@ rds_client = boto3.client('rds', region_name='eu-north-1')
 emr_client = boto3.client('emr', region_name='eu-north-1')
 
 # Define your parameters
-RDS_DB_IDENTIFIER = '<<<healthcare_db>>>'
-EMR_CLUSTER_ID = '<<<j-XXXXXXXXXXXXX>>>'
+RDS_DB_IDENTIFIER = 'healthcare_db'
+EMR_CLUSTER_ID = 'j-XXXXXXXXXXXXX'  # Replace with your actual EMR cluster ID
+DB_USERNAME = 'admin'
+DB_PASSWORD = 'password'
+DB_NAME = 'healthcare'
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -20,15 +24,26 @@ def extract_data_from_rds(query, output_path):
         rds_instance = rds_client.describe_db_instances(DBInstanceIdentifier=RDS_DB_IDENTIFIER)
         rds_endpoint = rds_instance['DBInstances'][0]['Endpoint']['Address']
         
-        # Here, you would typically connect to the RDS instance using a MySQL or PostgreSQL client
-        # Example: using pymysql or psycopg2 to run a query and save the results to a file
-        # This is a placeholder to represent data extraction
-        with open(output_path, 'w') as output_file:
-            output_file.write("Sample extracted data")
+        # Connect to the RDS MySQL instance
+        conn = pymysql.connect(host=rds_endpoint,
+                               user=DB_USERNAME,
+                               password=DB_PASSWORD,
+                               database=DB_NAME)
         
+        with conn.cursor() as cursor:
+            cursor.execute(query)
+            result = cursor.fetchall()
+            with open(output_path, 'w') as output_file:
+                for row in result:
+                    output_file.write(','.join(map(str, row)) + '\n')
+        
+        conn.close()
         logging.info(f"Data extraction complete. Data saved to {output_path}")
     except ClientError as e:
         logging.error(f"Failed to extract data from RDS: {e}")
+        raise
+    except pymysql.MySQLError as e:
+        logging.error(f"MySQL error occurred: {e}")
         raise
 
 def submit_spark_job(script_path, input_path, output_path):
@@ -78,22 +93,41 @@ def submit_spark_job(script_path, input_path, output_path):
 def load_data_into_rds(input_path):
     try:
         logging.info("Loading processed data back into RDS...")
-        # Again, typically you would use a MySQL or PostgreSQL client to load data into RDS
-        # This is a placeholder to represent data loading
+        rds_instance = rds_client.describe_db_instances(DBInstanceIdentifier=RDS_DB_IDENTIFIER)
+        rds_endpoint = rds_instance['DBInstances'][0]['Endpoint']['Address']
+        
+        # Connect to the RDS MySQL instance
+        conn = pymysql.connect(host=rds_endpoint,
+                               user=DB_USERNAME,
+                               password=DB_PASSWORD,
+                               database=DB_NAME)
+        
+        with conn.cursor() as cursor:
+            with open(input_path, 'r') as input_file:
+                for line in input_file:
+                    # Assuming CSV format
+                    data = line.strip().split(',')
+                    cursor.execute("INSERT INTO processed_table (column1, column2, ...) VALUES (%s, %s, ...)", data)
+        
+        conn.commit()
+        conn.close()
         logging.info(f"Data loaded successfully from {input_path} into RDS.")
     except ClientError as e:
         logging.error(f"Failed to load data into RDS: {e}")
+        raise
+    except pymysql.MySQLError as e:
+        logging.error(f"MySQL error occurred: {e}")
         raise
 
 def main():
     try:
         logging.info("Starting data workflow...")
-        query = "SELECT * FROM healthcare_table;"  # Example query
+        query = "SELECT * FROM healthcare_table;"  # Replace with your actual SQL query
         output_path = "/tmp/extracted_data.csv"
         
         extract_data_from_rds(query, output_path)
         
-        spark_script_path = "s3://my-bucket/scripts/spark_script.py"
+        spark_script_path = "hdfs:///user/hadoop/spark_script.py"  # Adjust path as needed
         processed_output_path = "/tmp/processed_data.csv"
         
         submit_spark_job(spark_script_path, output_path, processed_output_path)
