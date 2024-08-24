@@ -98,7 +98,11 @@ resource "aws_iam_role_policy_attachment" "emr_service_policy_attachment" {
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonElasticMapReduceforEC2Role"
 }
 
-
+# Create an instance profile for the EMR cluster
+resource "aws_iam_instance_profile" "emr_instance_profile" {
+  name = "EMR_EC2_Instance_Profile"
+  role = aws_iam_role.emr_service_role.name
+}
 
 resource "aws_internet_gateway" "main_igw" {
   vpc_id = aws_vpc.main_vpc.id
