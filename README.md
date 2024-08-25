@@ -9,7 +9,6 @@ Plus, healthcare data in this project is from Kaggle dummy dataset, but for prac
 
 - **Amazon RDS**: Relational database for storing structured healthcare data.
 - **Amazon EMR (Elastic MapReduce)**: Used with Apache Spark for large-scale data processing.
-- **Apache Spark**: For big data processing.
 - **Terraform**: Infrastructure as code tool used for automating the provisioning and configuration of AWS resources.
 - **Python**: Used for scripting and automating data workflows between RDS and EMR.
 
