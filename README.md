@@ -17,7 +17,7 @@ Plus, healthcare data in this project is from Kaggle dummy dataset, but for prac
 - **/terraform**: Contains the Terraform scripts used to provision the AWS infrastructure, including RDS, EMR clusters, and necessary IAM roles and security groups.
 - **/scripts**: Python scripts that automate data workflows, such as data extraction, processing, and loading tasks.
   
-## Security and Compliance
+## Security
 
 The infrastructure is designed with security in mind, particularly for handling sensitive healthcare data. Amazon RDS is configured with encryption at rest and in transit, and IAM roles are used to ensure proper access control. Logging and monitoring are enabled to track access and usage across the infrastructure.
 
