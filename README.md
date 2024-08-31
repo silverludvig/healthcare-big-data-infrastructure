@@ -12,8 +12,11 @@ Data Governance: ensure the proper management, quality, and security of healthca
 
 # Project structure:
 /scripts: Python scripts
+
 /ansible: Ansible playbooks and roles for configuring monitoring and logging across the infrastructure, ensuring that all operations are recorded and anomalies are detected early on.
+
 /jenkins contains Jenkins pipeline configurations and scripts for automating infrastructure updates and managing data workflows.
+
 /terraform: Contains the Terraform scripts used to provision and configure the AWS infrastructure, such as Amazon RDS, EMR clusters, IAM roles, security groups, and other logging and monitoring tools. 
 
 # Security and Governance:
