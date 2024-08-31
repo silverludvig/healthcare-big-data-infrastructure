@@ -14,7 +14,7 @@ Amazon RDS: A relational database that stores structured healthcare data. Amazon
 
 /jenkins: Jenkins pipeline configurations and scripts for automating infrastructure updates and managing data workflows.
 
-/data_governance: Documentation and scripts for data governance processes, such as data quality checks, metadata management, and access control policies.
+/terraform: Contains the Terraform scripts required to provision and configure the AWS infrastructure, including Amazon RDS, EMR clusters, IAM roles, security groups, and other logging and monitoring tools. This ensures a repeatable and consistent setup across environments, supporting scalability and security.
 
 
 
