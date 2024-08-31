@@ -59,7 +59,7 @@ resource "aws_rds_instance" "healthcare_db" {
   password             = "RDS-Password#123"
   parameter_group_name = "default.mysql5.7"
   skip_final_snapshot  = true
-  publicly_accessible  = true
+  publicly_accessible  = false
   vpc_security_group_ids = [aws_security_group.emr_sg.id]
 }
 
