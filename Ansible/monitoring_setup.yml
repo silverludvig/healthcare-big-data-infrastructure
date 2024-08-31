@@ -15,3 +15,24 @@
 
     - name: Start CloudWatch Agent
       command: /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl -a start
+
+    - name: Create CloudWatch Alarm for CPU Utilization
+      aws_cloudwatch_alarm:
+        name: "High-CPU-Utilization"
+        metric_name: "CPUUtilization"
+        namespace: "AWS/EC2"
+        statistic: "Average"
+        period: 300
+        evaluation_periods: 1
+        threshold: 80
+        comparison_operator: "GreaterThanThreshold"
+        alarm_actions: ["arn:aws:sns:eu-north-1:123456789012:NotifyMe"]
+        dimensions:
+          InstanceId: "{{ ansible_ec2_instance_id }}"
+        region: "eu-north-1"
+
+    - name: Create CloudWatch Dashboard
+      aws_cloudwatch_dashboard:
+        name: "EC2-Instance-Monitoring"
+        dashboard_body: "{{ lookup('file', 'dashboard.json') }}"
+        region: "eu-north-1"
