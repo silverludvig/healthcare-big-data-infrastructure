@@ -141,17 +141,6 @@ resource "aws_route_table_association" "subnet_association" {
   route_table_id = aws_route_table.main_rt.id
 }
 
-# Jenkins EC2 Instance
-resource "aws_instance" "jenkins_server" {
-  ami           = "ami-0a91cd140a1fc148a"  # Replace with a valid AMI ID for your region
-  instance_type = "t2.micro"
-  subnet_id     = aws_subnet.main_subnet.id
-  security_groups = [aws_security_group.jenkins_sg.name]
-
-  tags = {
-    Name = "Jenkins-Server"
-  }
-}
 
 # CloudWatch Log Group for RDS
 resource "aws_cloudwatch_log_group" "rds_log_group" {
@@ -205,11 +194,11 @@ resource "aws_iam_instance_profile" "cloudwatch_instance_profile" {
 
 # Add IAM Role to Jenkins EC2 Instance
 resource "aws_instance" "jenkins_server" {
-  ami                    = "ami-0a91cd140a1fc148a"  # Replace with a valid AMI ID for your region
+  ami                    = "ami-0a91cd140a1fc148a" 
   instance_type          = "t2.micro"
   subnet_id              = aws_subnet.main_subnet.id
-  security_groups        = [aws_security_group.jenkins_sg.name]
-  iam_instance_profile   = aws_iam_instance_profile.cloudwatch_instance_profile.name
+  security_groups        = [aws_security_group.jenkins_sg.name]  # Security group assignment
+  iam_instance_profile   = aws_iam_instance_profile.cloudwatch_instance_profile.name  # IAM role assignment
 
   tags = {
     Name = "Jenkins-Server"
