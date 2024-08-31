@@ -1,19 +1,20 @@
 import boto3
-import pymysql  # or use psycopg2 for PostgreSQL
+import pymysql
+import os
 import time
 import logging
 from botocore.exceptions import ClientError
 
 # Initialize AWS clients
-rds_client = boto3.client('rds', region_name='eu-north-1')
-emr_client = boto3.client('emr', region_name='eu-north-1')
+rds_client = boto3.client('rds', region_name=os.getenv('AWS_REGION', 'eu-north-1'))
+emr_client = boto3.client('emr', region_name=os.getenv('AWS_REGION', 'eu-north-1'))
 
-# Define parameters
-RDS_DB_IDENTIFIER = 'healthcare_db'
-EMR_CLUSTER_ID = 'j-3H4K5L6P7J8M9N0P1' 
-DB_USERNAME = 'admin_user'
-DB_PASSWORD = 'Str0ngP@ssw0rd!'
-DB_NAME = 'healthcare'
+# Define parameters (use environment variables for sensitive data)
+RDS_DB_IDENTIFIER = os.getenv('RDS_DB_IDENTIFIER', 'healthcare_db')
+EMR_CLUSTER_ID = os.getenv('EMR_CLUSTER_ID', 'j-3H4K5L6P7J8M9N0P1')
+DB_USERNAME = os.getenv('DB_USERNAME', 'admin_user')
+DB_PASSWORD = os.getenv('DB_PASSWORD')  
+DB_NAME = os.getenv('DB_NAME', 'healthcare')
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -37,7 +38,6 @@ def extract_data_from_rds(query, output_path):
                 for row in result:
                     output_file.write(','.join(map(str, row)) + '\n')
         
-        conn.close()
         logging.info(f"Data extraction complete. Data saved to {output_path}")
     except ClientError as e:
         logging.error(f"Failed to extract data from RDS: {e}")
@@ -45,6 +45,9 @@ def extract_data_from_rds(query, output_path):
     except pymysql.MySQLError as e:
         logging.error(f"MySQL error occurred: {e}")
         raise
+    finally:
+        if 'conn' in locals() and conn.open:
+            conn.close()
 
 def submit_spark_job(script_path, input_path, output_path):
     try:
@@ -105,12 +108,11 @@ def load_data_into_rds(input_path):
         with conn.cursor() as cursor:
             with open(input_path, 'r') as input_file:
                 for line in input_file:
-                    # Assuming CSV format
+                    # CSV format
                     data = line.strip().split(',')
                     cursor.execute("INSERT INTO processed_table (column1, column2, ...) VALUES (%s, %s, ...)", data)
         
         conn.commit()
-        conn.close()
         logging.info(f"Data loaded successfully from {input_path} into RDS.")
     except ClientError as e:
         logging.error(f"Failed to load data into RDS: {e}")
@@ -118,6 +120,9 @@ def load_data_into_rds(input_path):
     except pymysql.MySQLError as e:
         logging.error(f"MySQL error occurred: {e}")
         raise
+    finally:
+        if 'conn' in locals() and conn.open:
+            conn.close()
 
 def main():
     try:
