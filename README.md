@@ -1,26 +1,50 @@
 # AWS-Driven Big Data Infrastructure for Healthcare with Terraform, Jenkins, and Ansible
 
+Overview
+This project showcases an automated, scalable big data infrastructure designed for processing healthcare data on AWS. By integrating Terraform, Jenkins, and Ansible, this infrastructure is capable of managing and processing large datasets with high efficiency, reliability, and security.
 
-This project focuses on building and managing a scalable infrastructure for processing structured healthcare data using AWS services. Amazon RDS is the relational database, responsible for securely storing and managing healthcare data with high availability. For complex data processing, AWS EMR with Apache Spark is used to efficiently handle large datasets. Terraform is leveraged to automate the provisioning and configuration of AWS infrastructure, ensuring that everything is consistent and easily repeatable. Python scripts are to automate the data workflows, such as extracting data from RDS, processing it in Spark on EMR, and then loading the processed data back into RDS.
+Key Components
+Terraform: Used to define and provision the AWS infrastructure as code, including VPC, RDS, EMR, and EC2 instances. Terraform ensures that the infrastructure is consistent, repeatable, and version-controlled.
 
-Plus, healthcare data in this project is from Kaggle dummy dataset, but for practicing and learning purposes, I still treated the data as sensitive data in this project.
+Jenkins: Serves as the CI/CD pipeline tool to automate the deployment process and manage the data processing workflows. Jenkins facilitates the seamless integration of code changes and infrastructure updates.
 
-## Technologies Used
+Ansible: Employed for configuration management and automation, particularly in setting up Jenkins on EC2 instances and configuring CloudWatch monitoring. Ansible ensures that the systems are correctly configured and operational.
 
-- **Amazon RDS**: Relational database for storing structured healthcare data.
-- **Amazon EMR (Elastic MapReduce)**: Used with Apache Spark for large-scale data processing.
-- **Terraform**: Infrastructure as code tool used for automating the provisioning and configuration of AWS resources.
-- **Python**: Used for scripting and automating data workflows between RDS and EMR.
+AWS Services Utilized
+Amazon RDS: A managed relational database service used to store structured healthcare data with high availability and security.
 
-## Project Structure
+Amazon EMR: A cloud-native big data platform used to process and analyze large datasets using Apache Spark. EMR allows for scalable and fast data processing.
 
-- **/terraform**: Contains the Terraform scripts used to provision the AWS infrastructure, including RDS, EMR clusters, and necessary IAM roles and security groups.
-- **/scripts**: Python scripts that automate data workflows, such as data extraction, processing, and loading tasks.
-  
-## Security
+Amazon EC2: Virtual servers in the cloud used to host the Jenkins server and other necessary components of the infrastructure.
 
-The infrastructure is designed with security in mind, particularly for handling sensitive healthcare data. Amazon RDS is configured with encryption at rest and in transit, and IAM roles are used to ensure proper access control. Logging and monitoring are enabled to track access and usage across the infrastructure.
+Amazon CloudWatch: Monitoring and observability service that provides data and actionable insights to monitor the health of the infrastructure and applications.
 
-## License
+Project Structure
+Ansible Directory:
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+Contains playbooks for automating the setup of Jenkins and CloudWatch monitoring.
+Terraform Directory:
+
+Holds the Terraform configuration files that define the AWS infrastructure.
+Scripts Directory:
+
+Includes Python scripts for data extraction, processing using Spark, and validation.
+Jenkins Pipeline:
+
+Automates the deployment of infrastructure and the execution of data workflows, ensuring continuous integration and delivery.
+Features
+Scalable and Secure Infrastructure:
+
+The infrastructure is built to handle large-scale data processing tasks while ensuring the security and integrity of sensitive healthcare data.
+Automation:
+
+Terraform, Jenkins, and Ansible automate the provisioning, configuration, and management of the infrastructure, reducing manual effort and the risk of human error.
+Big Data Processing:
+
+Utilizes Apache Spark on EMR for fast and efficient processing of large datasets, making it suitable for various data analytics and machine learning tasks.
+Monitoring and Observability:
+
+CloudWatch provides real-time monitoring of infrastructure health and performance, allowing for proactive management and troubleshooting.
+
+Conclusion
+This project demonstrates the power of combining Terraform, Jenkins, and Ansible to build and manage a robust big data infrastructure on AWS. It is ideal for processing healthcare data, ensuring that the infrastructure is scalable, secure, and capable of handling complex data processing tasks with ease.
