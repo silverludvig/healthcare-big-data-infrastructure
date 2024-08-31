@@ -5,20 +5,17 @@ def validate_data(file_path):
         # Load the data into a pandas DataFrame
         df = pd.read_csv(file_path)
         
-        # Check for null values
-        if df.isnull().values.any():
-            raise ValueError("Data contains null values.")
+        # Check for null values in critical columns
+        if df['Billing Amount'].isnull().any():
+            raise ValueError("Data contains null values in 'Billing Amount'.")
 
-        # Ensure specific columns are of the correct type
-        if not pd.api.types.is_numeric_dtype(df['id']):
-            raise ValueError("Column 'id' should be numeric.")
-        
-        # additional checks
-        if df['diagnosis'].isnull().sum() > 0:
-            raise ValueError("Some rows are missing diagnosis information.")
-        
-        if (df['treatment_date'] > pd.Timestamp.today()).any():
-            raise ValueError("Some treatment dates are in the future.")
+        # Ensure 'Billing Amount' is a numeric type
+        if not pd.api.types.is_numeric_dtype(df['Billing Amount']):
+            raise ValueError("Column 'Billing Amount' should be numeric.")
+
+        # Ensure 'Medical Condition' is present
+        if df['Medical Condition'].isnull().any():
+            raise ValueError("Missing values in 'Medical Condition' column.")
 
         print("Data validation passed.")
     except Exception as e:
@@ -26,4 +23,4 @@ def validate_data(file_path):
         raise
 
 if __name__ == "__main__":
-    validate_data("/tmp/processed_data.csv")
+    validate_data("/tmp/cost_analysis.csv")
