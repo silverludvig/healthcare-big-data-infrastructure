@@ -6,7 +6,7 @@ variable "region" {
 }
 
 
-# Define a variable for the environment (e.g., dev, staging, prod)
+
 variable "environment" {
   description = "The environment for deployment (e.g., dev, staging, prod)"
   type        = string
