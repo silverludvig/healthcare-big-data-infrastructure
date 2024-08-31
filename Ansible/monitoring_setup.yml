@@ -30,9 +30,3 @@
         dimensions:
           InstanceId: "{{ ansible_ec2_instance_id }}"
         region: "eu-north-1"
-
-    - name: Create CloudWatch Dashboard
-      aws_cloudwatch_dashboard:
-        name: "EC2-Instance-Monitoring"
-        dashboard_body: "{{ lookup('file', 'dashboard.json') }}"
-        region: "eu-north-1"
