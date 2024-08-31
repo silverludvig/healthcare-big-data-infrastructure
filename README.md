@@ -1,4 +1,4 @@
-# AWS-Driven Big Data Infrastructure for Healthcare
+# AWS-Driven Big Data Infrastructure for Healthcare with Terraform, Jenkins, and Ansible
 
 
 This project focuses on building and managing a scalable infrastructure for processing structured healthcare data using AWS services. Amazon RDS is the relational database, responsible for securely storing and managing healthcare data with high availability. For complex data processing, AWS EMR with Apache Spark is used to efficiently handle large datasets. Terraform is leveraged to automate the provisioning and configuration of AWS infrastructure, ensuring that everything is consistent and easily repeatable. Python scripts are to automate the data workflows, such as extracting data from RDS, processing it in Spark on EMR, and then loading the processed data back into RDS.
