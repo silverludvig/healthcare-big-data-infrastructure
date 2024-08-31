@@ -12,6 +12,13 @@ def validate_data(file_path):
         # Ensure specific columns are of the correct type
         if not pd.api.types.is_numeric_dtype(df['id']):
             raise ValueError("Column 'id' should be numeric.")
+        
+        # additional checks
+        if df['diagnosis'].isnull().sum() > 0:
+            raise ValueError("Some rows are missing diagnosis information.")
+        
+        if (df['treatment_date'] > pd.Timestamp.today()).any():
+            raise ValueError("Some treatment dates are in the future.")
 
         print("Data validation passed.")
     except Exception as e:
