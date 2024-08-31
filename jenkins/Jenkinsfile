@@ -14,14 +14,6 @@ pipeline {
             }
         }
 
-        stage('Terraform Plan') {
-            steps {
-                script {
-                    sh 'terraform plan'
-                }
-            }
-        }
-
         stage('Terraform Apply') {
             steps {
                 script {
@@ -30,10 +22,18 @@ pipeline {
             }
         }
 
-        stage('Run Data Workflow') {
+        stage('Run Cost Analysis') {
             steps {
                 script {
-                    sh 'python3 workflow.py'
+                    sh 'python3 scripts/my_spark_job.py'
+                }
+            }
+        }
+
+        stage('Validate Results') {
+            steps {
+                script {
+                    sh 'python3 scripts/validate_data.py'
                 }
             }
         }
