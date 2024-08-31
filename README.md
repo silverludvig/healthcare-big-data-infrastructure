@@ -1,3 +1,5 @@
+# AWS-Driven Big Data Infrastructure for Healthcare with Terraform, Jenkins, and Ansible
+
 This project focuses on building and managing a scalable infrastructure for processing structured healthcare data using AWS services. The core components include Amazon RDS for secure and highly available data storage, AWS EMR with Apache Spark for complex data processing, and Terraform for automating the provisioning and configuration of AWS infrastructure. Additionally, Ansible is used for monitoring and logging, data governance practices are implemented, and Jenkins is added for continuous integration and deployment (CI/CD) pipelines. While some of these tools, like Ansible, Jenkins, and data governance, might not be essential for a personal project, they are included to facilitate learning and skill development in these areas.
 
 Technologies Used
