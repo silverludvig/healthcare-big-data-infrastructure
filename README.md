@@ -2,7 +2,7 @@
 
 The goal of this project is to build and manage a scalable infrastructure for assessing healthcare costs using Amazon Web Services. Amazon RDS offers secure and easily accessible data storage, AWS EMR with Apache Spark manages data processing tasks, and Terraform automates AWS infrastructure deployment and configuration. Ansible is used for monitoring and logging, while Jenkins is utilized for supporting continuous integration and deployment (CI/CD) pipelines. This research analyzes healthcare cost using patient demographics, medical conditions, and treatment records, delivering significant insights. Although some tools, such as Ansible and Jenkins, may be unnecessary for a personal project, they are included to help with learning and skill development in these areas.
 
-# Technologies Used: Amazon RDS: A relational database for organized healthcare data.
+# Technologies Used:
 Amazon RDS: A relational database that stores structured healthcare data.
 Amazon EMR (Elastic MapReduce) is used in conjunction with Apache Spark to process and analyze large datasets.
 Terraform automates the provisioning and configuration of AWS services.
