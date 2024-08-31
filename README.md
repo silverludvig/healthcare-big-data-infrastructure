@@ -37,5 +37,4 @@ Ansible for Monitoring and Logging: Ansible playbooks are used to configure AWS 
 
 Jenkins for CI/CD: Jenkins pipelines are configured to automate the deployment of Terraform scripts, Python data workflows, and Ansible playbooks. This helps in maintaining consistency across environments and reduces manual intervention.
 
-Data Governance: Although the data used in this project is from a Kaggle dummy dataset, data governance practices are applied as if it were real healthcare data. This includes establishing data stewardship roles, creating data quality dashboards, and implementing data retention policies.
-
+Data Governance: Although the data used in this project is from a Kaggle dummy dataset, data governance practices are applied as if it were real healthcare data.
